@@ -13,7 +13,7 @@ const ToggleMode = () => {
 		setMounted(true);
 	}, []);
 
-	if (!mounted) return <Button variant='outline' size='icon' disabled />;
+	if (!mounted) return <Button variant='outline' size='icon' disabled={true} />;
 
 	const dark = theme === 'dark';
 
