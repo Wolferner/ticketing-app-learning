@@ -1,6 +1,9 @@
+import prisma from '@/prisma/db';
 import React from 'react';
+const Tickets = async () => {
+	const tickets = await prisma.ticket.findMany();
 
-const Tickets = () => {
+	console.log(tickets);
 	return <div>Tickets</div>;
 };
 
