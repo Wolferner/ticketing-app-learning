@@ -3,9 +3,10 @@ import { ticketSchema } from '@/schemas/ticket';
 import { zodResolver } from '@hookform/resolvers/zod';
 import 'easymde/dist/easymde.min.css';
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import SimpleMdeReact from 'react-simplemde-editor';
 import { z } from 'zod';
+import { Button } from './ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form';
 import { Input } from './ui/input';
 import {
@@ -19,13 +20,22 @@ import {
 type TicketFormData = z.infer<typeof ticketSchema>;
 
 const TicketForm = () => {
+	const [isSubmitting, setIsSubmitting] = React.useState(false);
+	const [error, setError] = React.useState<string | null>(null);
+
 	const form = useForm({
 		resolver: zodResolver(ticketSchema),
+		defaultValues: {
+			title: '',
+			description: '',
+			status: '',
+			priority: '',
+		},
 	});
 
-	async function onSubmit(values: TicketFormData) {
+	const onSubmit: SubmitHandler<TicketFormData> = async values => {
 		console.log(values);
-	}
+	};
 
 	return (
 		<div className='rounded-md border w-full p-4'>
@@ -105,6 +115,9 @@ const TicketForm = () => {
 							)}
 						/>
 					</div>
+					<Button type='submit' disabled={isSubmitting}>
+						Submit
+					</Button>
 				</form>
 			</Form>
 		</div>
