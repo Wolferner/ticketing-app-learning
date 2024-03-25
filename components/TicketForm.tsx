@@ -1,7 +1,9 @@
 'use client';
 import { ticketSchema } from '@/schemas/ticket';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import 'easymde/dist/easymde.min.css';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import SimpleMdeReact from 'react-simplemde-editor';
@@ -21,9 +23,10 @@ type TicketFormData = z.infer<typeof ticketSchema>;
 
 const TicketForm = () => {
 	const [isSubmitting, setIsSubmitting] = React.useState(false);
-	const [error, setError] = React.useState<string | null>(null);
+	const [error, setError] = React.useState<string>('');
+	const router = useRouter();
 
-	const form = useForm({
+	const form = useForm<TicketFormData>({
 		resolver: zodResolver(ticketSchema),
 		defaultValues: {
 			title: '',
@@ -34,6 +37,20 @@ const TicketForm = () => {
 	});
 
 	const onSubmit: SubmitHandler<TicketFormData> = async values => {
+		try {
+			setIsSubmitting(true);
+			setError('');
+
+			await axios.post('/api/tickets', values);
+
+			setIsSubmitting(false);
+			router.push('/tickets');
+			router.refresh();
+		} catch (error) {
+			console.error(error);
+			setError('Unknown error');
+			setIsSubmitting(false);
+		}
 		console.log(values);
 	};
 
