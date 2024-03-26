@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 	});
 
 	if (duplicate) {
-		return NextResponse.json({ message: 'Dublicate user' }, { status: 400 });
+		return NextResponse.json({ message: 'Duplicate user' }, { status: 409 });
 	}
 
 	const hashedPassword = await bcrypt.hash(body.password, 10);
