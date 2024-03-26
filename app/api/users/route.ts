@@ -1,5 +1,5 @@
 import prisma from '@/prisma/db';
-import { userSchema } from '@/schemas/users';
+import { userSchema } from '@/schemas/user';
 import bcrypt from 'bcryptjs';
 import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
 	const duplicate = await prisma.user.findUnique({
 		where: {
-			userName: body.userName,
+			username: body.username,
 		},
 	});
 
