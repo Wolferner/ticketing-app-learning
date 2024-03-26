@@ -1,10 +1,14 @@
 import UserForm from '@/components/UserForm';
+import prisma from '@/prisma/db';
 import React from 'react';
+import DataTableSimple from './data-table-simple';
 
-const Users = () => {
+const Users = async () => {
+	const users = await prisma.user.findMany();
 	return (
 		<div>
 			<UserForm />
+			<DataTableSimple users={users} />
 		</div>
 	);
 };
