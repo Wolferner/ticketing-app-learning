@@ -1,4 +1,5 @@
 import Pagination from '@/components/Pagination';
+import StatusFilter from '@/components/StatusFilter';
 import { buttonVariants } from '@/components/ui/button';
 import prisma from '@/prisma/db';
 import Link from 'next/link';
@@ -28,6 +29,7 @@ const Tickets = async ({ searchParams }: Props) => {
 			>
 				New Ticket
 			</Link>
+			<StatusFilter />
 			<DataTable tickets={tickets} />
 			<Pagination
 				itemCount={ticketCount}
