@@ -27,7 +27,7 @@ model Ticket {
 model User {
   id Int @id @default(autoincrement())
   name String
-  username String
+  userName String @unique
   password String
   role Role @default(USER)
   assignedTickets Ticket[]
