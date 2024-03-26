@@ -2,14 +2,15 @@ import Pagination from '@/components/Pagination';
 import StatusFilter from '@/components/StatusFilter';
 import { buttonVariants } from '@/components/ui/button';
 import prisma from '@/prisma/db';
-import { Status } from '@prisma/client';
+import { Status, Ticket } from '@prisma/client';
 import Link from 'next/link';
 import React from 'react';
 import DataTable from './DataTable';
 
-interface SearchParams {
+export interface SearchParams {
 	page: string;
 	status: Status;
+	orderBy: keyof Ticket;
 }
 interface Props {
 	searchParams: SearchParams;
@@ -52,7 +53,7 @@ const Tickets = async ({ searchParams }: Props) => {
 				</Link>
 				<StatusFilter />
 			</div>
-			<DataTable tickets={tickets} />
+			<DataTable tickets={tickets} searchParams={searchParams} />
 			<Pagination
 				itemCount={ticketCount}
 				pageSize={pageSize}
