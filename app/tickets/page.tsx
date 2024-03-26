@@ -1,3 +1,4 @@
+import Pagination from '@/components/Pagination';
 import { buttonVariants } from '@/components/ui/button';
 import prisma from '@/prisma/db';
 import Link from 'next/link';
@@ -15,6 +16,7 @@ const Tickets = async () => {
 				New Ticket
 			</Link>
 			<DataTable tickets={tickets} />
+			<Pagination itemCount={26} pageSize={10} currentPage={1} />
 		</div>
 	);
 };
