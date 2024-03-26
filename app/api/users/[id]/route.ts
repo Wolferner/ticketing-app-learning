@@ -25,9 +25,12 @@ export async function PATCH(request: NextRequest, { params }: Props) {
 		return NextResponse.json({ error: 'User not found' }, { status: 404 });
 	}
 
-	if (body?.password) {
+	//Check existing of password to hash it or not to rewrite it, because when comes empty string its mean that user dont change it
+	if (body?.password && body.password !== '') {
 		const hashPassword = await bcrypt.hash(body.password, 10);
 		body.password = hashPassword;
+	} else {
+		delete body.password;
 	}
 
 	if (user.username !== body.username) {
