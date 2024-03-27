@@ -23,7 +23,6 @@ const MainNavLinks = ({ role }: { role?: string }) => {
 	];
 
 	const currentPath = usePathname();
-	console.log(currentPath);
 
 	return (
 		<div className='flex items-center gap-2'>

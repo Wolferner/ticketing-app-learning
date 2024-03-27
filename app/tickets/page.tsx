@@ -22,6 +22,7 @@ const Tickets = async ({ searchParams }: Props) => {
 	const orderBy = searchParams.orderBy ? searchParams.orderBy : 'createdAt';
 
 	const statuses = Object.values(Status);
+
 	const status = statuses.includes(searchParams.status)
 		? searchParams.status
 		: undefined;
