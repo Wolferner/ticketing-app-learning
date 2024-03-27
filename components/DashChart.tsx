@@ -20,6 +20,7 @@ interface dataElements {
 	total: number;
 }
 const DashChart = ({ data }: dataProps) => {
+	// console.log(data);
 	return (
 		<Card className='col-span-4'>
 			<CardHeader>
@@ -27,7 +28,10 @@ const DashChart = ({ data }: dataProps) => {
 			</CardHeader>
 			<CardContent className='pl-2'>
 				<ResponsiveContainer width='100%' height={350}>
-					<BarChart data={data}>
+					<BarChart
+						data={data}
+						className='[&_.recharts-tooltip-cursor]:fill-zinc-200 dark:[&_.recharts-tooltip-cursor]:fill-zinc-800'
+					>
 						<XAxis
 							dataKey='name'
 							stroke='#888888'
@@ -36,14 +40,22 @@ const DashChart = ({ data }: dataProps) => {
 							axisLine={false}
 						/>
 						<YAxis
-							dataKey='name'
 							stroke='#888888'
 							fontSize={12}
 							tickLine={false}
 							axisLine={false}
 						/>
-						<Tooltip />
-						<Bar dataKey='total' fill='#60A5FA' radius={[4, 4, 0, 0]} />
+						<Tooltip
+							separator=': '
+							labelClassName='font-bold'
+							wrapperClassName='!text-sm dark:!bg-black rounded-md dark:!border-border'
+							formatter={(value, name) => {
+								if (name === 'total') {
+									return [value, 'Total cases'];
+								}
+							}}
+						/>
+						<Bar dataKey='total' fill='#2a87f9' radius={[4, 4, 0, 0]} />
 					</BarChart>
 				</ResponsiveContainer>
 			</CardContent>
