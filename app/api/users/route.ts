@@ -1,8 +1,21 @@
 import prisma from '@/prisma/db';
 import { userSchema } from '@/schemas/user';
 import bcrypt from 'bcryptjs';
+import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
+import options from '../auth/[...nextauth]/options';
 export async function POST(request: NextRequest) {
+	const session = await getServerSession(options);
+	if (!session) {
+		return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 });
+	}
+	if (session.user.role !== 'ADMIN') {
+		return NextResponse.json(
+			{ error: 'Dont have permissions of admin' },
+			{ status: 401 }
+		);
+	}
+
 	const body = await request.json();
 	const validation = userSchema.safeParse(body);
 
